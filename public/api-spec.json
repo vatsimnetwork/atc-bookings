@@ -1,0 +1,461 @@
+{
+    "openapi":"3.0.0",
+    "info": {
+        "title": "VATSIM ATC Bookings API",
+        "version": "1.0.0",
+        "description": "### Obtaining an API Key\n\nAn API key can only be obtained by Divisions or \nrecognised ARTCCs, vACCs or other Subdivisions that \nprovide an active ATC service.\n\nAn API Key request can be submitted to the VATSIM Tech Team \nat [https://support.vatsim.net](https://support.vatsim.net) \nand must be sent from a member of staff responsible for web. "
+    },
+    "servers": [
+        {
+            "url": "https://atc-bookings.vatsim.net/api"
+        }
+    ],
+    "externalDocs": {
+        "description": "Back to the Calendar",
+        "url": "https://atc-bookings.test"
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        },
+        "schemas": {
+            "Error": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "string",
+                        "example": "Here is an error message"
+                    }
+                }
+            },
+            "ValidationErrors": {
+                "type": "object",
+                "properties": {
+                    "callsign": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "cid": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "start": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "end": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+                    "type": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                }
+            },
+            "Booking": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "callsign": {
+                        "type": "string",
+                        "example": "LON_CTR"
+                    },
+                    "cid": {
+                        "type": "integer",
+                        "example": 1240411
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "booking"
+                    },
+                    "start": {
+                        "type": "string",
+                        "example": "2022-02-12 12:00:00"
+                    },
+                    "end": {
+                        "type": "string",
+                        "example": "2022-02-12 14:00:00"
+                    }
+                }
+            },
+            "Bookings": {
+                "type": "array",
+                "items": {
+                    "$ref": "#/components/schemas/Booking"
+                }
+            },
+            "BookingStoreRequest": {
+                "type": "object",
+                "required": [
+                    "callsign",
+                    "cid",
+                    "start",
+                    "end"
+                ],
+                "properties": {
+                    "callsign": {
+                        "type": "string",
+                        "example": "LON_CTR"
+                    },
+                    "cid": {
+                        "type": "integer",
+                        "example": 1240411
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "booking",
+                        "description": "booking assumed if not specified",
+                        "enum": [
+                            "booking",
+                            "event",
+                            "exam",
+                            "mentoring"
+                        ]
+                    },
+                    "start": {
+                        "type": "string",
+                        "example": "2022-02-12 12:00:00"
+                    },
+                    "end": {
+                        "type": "string",
+                        "example": "2022-02-12 14:00:00"
+                    }
+                }
+            },
+            "BookingUpdateRequest": {
+                "type": "object",
+                "properties": {
+                    "callsign": {
+                        "type": "string",
+                        "example": "LON_CTR"
+                    },
+                    "cid": {
+                        "type": "integer",
+                        "example": 1240411
+                    },
+                    "type": {
+                        "type": "string",
+                        "example": "booking",
+                        "enum": [
+                            "booking",
+                            "event",
+                            "exam",
+                            "mentoring"
+                        ]
+                    },
+                    "start": {
+                        "type": "string",
+                        "example": "2022-02-12 12:00:00"
+                    },
+                    "end": {
+                        "type": "string",
+                        "example": "2022-02-12 14:00:00"
+                    }
+                }
+            }
+        }
+    },
+    "paths": {
+        "/booking": {
+            "get": {
+                "summary": "Get Bookings",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "key_only",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Get bookings only associated with auth key.",
+                        "example": "true"
+                    },
+                    {
+                        "in": "query",
+                        "name": "callsign",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Comma delimited callsigns, prefixes or suffixes. Each callsign queried as {callsign}%.",
+                        "example": "LON,SCO,LTC,STC"
+                    },
+                    {
+                        "in": "query",
+                        "name": "date",
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        },
+                        "description": "Get bookings that start on the specified day. Formatted as yyyy-mm-dd.",
+                        "example": "2022-02-14"
+                    },
+                    {
+                        "in": "query",
+                        "name": "type",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "booking",
+                                "event",
+                                "exam",
+                                "mentoring"
+                            ]
+                        },
+                        "description": "Type of booking",
+                        "example": "exam"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "start",
+                                "end",
+                                "callsign"
+                            ]
+                        },
+                        "description": "Order by selected. If not specified: start. Required with sort_dir.",
+                        "example": "callsign"
+                    },
+                    {
+                        "in": "query",
+                        "name": "sort_dir",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        },
+                        "description": "Order by direction. If not specified: asc.",
+                        "example": "desc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bookings List",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Bookings"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized - Only Possible when no valid Bearer sent and key_only set",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "summary": "Create a new Booking",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookingStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Booking Created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation Errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrors"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/booking/{id}": {
+            "get": {
+                "summary": "Get a Booking",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "description": "The ID of the Booking"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Booking Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Booking Not Found"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update a Booking",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "description": "The ID of the Booking"
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookingUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Booking Updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Booking"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Booking Not Found"
+                    },
+                    "422": {
+                        "description": "Validation Errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ValidationErrors"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete a Booking",
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        },
+                        "description": "The ID of the Booking"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Booking Deleted"
+                    },
+                    "404": {
+                        "description": "Booking Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
