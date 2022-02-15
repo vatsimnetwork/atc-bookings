@@ -47,11 +47,10 @@ class Handler extends ExceptionHandler
      *
      * @param Request $request
      * @param Throwable $e
-     * @return Response|JsonResponse
      *
      * @throws Throwable
      */
-    public function render($request, Throwable $e): Response|JsonResponse
+    public function render($request, Throwable $e)
     {
         return parent::render($request, $e);
     }

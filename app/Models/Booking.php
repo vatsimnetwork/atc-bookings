@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int api_key_id
  * @property string callsign
  * @property int cid
+ * @property string division
+ * @property string subdivision
  * @property string start
  * @property string end
  * @property string type
@@ -19,6 +21,6 @@ class Booking extends Model
 {
     public $table = 'bookings';
     protected $fillable = [
-        'callsign', 'cid', 'start', 'end', 'type'
+        'callsign', 'cid', 'start', 'end', 'type', 'division', 'subdivision'
     ];
 }

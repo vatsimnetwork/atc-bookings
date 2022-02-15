@@ -25,7 +25,7 @@
             "Error": {
                 "type": "object",
                 "properties": {
-                    "error": {
+                    "message": {
                         "type": "string",
                         "example": "Here is an error message"
                     }
@@ -92,6 +92,15 @@
                     "end": {
                         "type": "string",
                         "example": "2022-02-12 14:00:00"
+                    },
+                    "division": {
+                        "type": "string",
+                        "example": "EUD"
+                    },
+                    "subdivision": {
+                        "type": "string",
+                        "example": "AMS",
+                        "nullable": true
                     }
                 }
             },
@@ -136,6 +145,18 @@
                     "end": {
                         "type": "string",
                         "example": "2022-02-12 14:00:00"
+                    },
+                    "division": {
+                        "type": "string",
+                        "description": "Division associated with key if not specified",
+                        "example": "EUD",
+                        "nullable": true
+                    },
+                    "subdivision": {
+                        "type": "string",
+                        "description": "Sub-Division associated with key if not specified",
+                        "example": "AMS",
+                        "nullable": true
                     }
                 }
             },
@@ -157,7 +178,7 @@
                             "booking",
                             "event",
                             "exam",
-                            "mentoring"
+                            "training"
                         ]
                     },
                     "start": {
@@ -167,6 +188,16 @@
                     "end": {
                         "type": "string",
                         "example": "2022-02-12 14:00:00"
+                    },
+                    "division": {
+                        "type": "string",
+                        "example": "EUD",
+                        "nullable": true
+                    },
+                    "subdivision": {
+                        "type": "string",
+                        "example": "AMS",
+                        "nullable": true
                     }
                 }
             }
@@ -219,6 +250,24 @@
                         },
                         "description": "Type of booking",
                         "example": "exam"
+                    },
+                    {
+                        "in": "query",
+                        "name": "division",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Get bookings associated with a division. Required with subdivision",
+                        "example": "EUD"
+                    },
+                    {
+                        "in": "query",
+                        "name": "subdivision",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Get bookings associated with a subdivision",
+                        "example": "AMS"
                     },
                     {
                         "in": "query",
@@ -438,7 +487,7 @@
                     }
                 ],
                 "responses": {
-                    "200": {
+                    "204": {
                         "description": "Booking Deleted"
                     },
                     "404": {

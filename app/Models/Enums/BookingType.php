@@ -7,5 +7,5 @@ enum BookingType: string
     case booking = 'booking';
     case event = 'event';
     case exam = 'exam';
-    case mentoring = 'mentoring';
+    case training = 'training';
 }

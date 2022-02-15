@@ -6,7 +6,7 @@ use App\Models\ApiKey;
 use Closure;
 use Illuminate\Http\Request;
 
-class TokenMiddleware
+class CookieMiddleware
 {
     /**
      * Handle an incoming request.
@@ -17,17 +17,10 @@ class TokenMiddleware
      */
     public function handle(Request $request, Closure $next): mixed
     {
-        $token = $request->bearerToken();
-        if (!$token) {
-            return $next($request);
+        $token = $request->cookie('secret-key');
+        if (!$token || $token != env('SECRET_AUTH_KEY')) {
+            return redirect()->route('key-auth.index', ['error' => 'no-auth']);
         }
-
-        $key_model = ApiKey::query()->where('key', $token)->first();
-        if (!$key_model) {
-            return response_unauth(['message' => 'Token does not exist']);
-        }
-
-        $request->user = $key_model;
 
         return $next($request);
     }

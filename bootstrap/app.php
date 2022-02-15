@@ -84,6 +84,10 @@ $app->configure('app');
      'token' => App\Http\Middleware\TokenMiddleware::class,
  ]);
 
+ $app->routeMiddleware([
+     'cookie-auth' => App\Http\Middleware\CookieMiddleware::class,
+ ]);
+
 /*
 |--------------------------------------------------------------------------
 | Register Service Providers

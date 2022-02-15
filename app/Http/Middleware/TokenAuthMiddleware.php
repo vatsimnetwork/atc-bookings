@@ -19,12 +19,12 @@ class TokenAuthMiddleware
     {
         $token = $request->bearerToken();
         if (!$token) {
-            return response_unauth(['error' => 'Missing Bearer Token']);
+            return response_unauth(['message' => 'Missing Bearer Token']);
         }
 
         $key_model = ApiKey::query()->where('key', $token)->first();
         if (!$key_model) {
-            return response_unauth(['error' => 'Token does not exist']);
+            return response_unauth(['message' => 'Token does not exist']);
         }
 
         $request->user = $key_model;

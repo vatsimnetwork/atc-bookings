@@ -15,7 +15,10 @@ class CreateApiKeyTable extends Migration
     {
         Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('cid');
             $table->string('name');
+            $table->string('division')->nullable();
+            $table->string('subdivision')->nullable();
             $table->string('key', 32);
             $table->timestamps();
         });

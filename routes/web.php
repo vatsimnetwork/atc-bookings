@@ -16,7 +16,21 @@
 use Laravel\Lumen\Routing\Router;
 
 $router->get('/', ['as' => 'index', 'uses' => 'FrontendController@index']);
+$router->get('/get-bookings/{order}', ['as' => 'getbookings-order', 'uses' => 'FrontendController@getBookings']);
 $router->get('api-doc', ['as' => 'api-doc', 'uses' => 'FrontendController@apiDoc']);
+
+$router->group(['prefix' => 'secret-key-auth'], function() use ($router) {
+    $router->get('/', ['as' => 'key-auth.index', 'uses' => 'KeyAuthController@index']);
+    $router->post('/', ['as' => 'key-auth.auth', 'uses' => 'KeyAuthController@auth']);
+});
+
+$router->group(['prefix' => 'secret-key-management', 'middleware' => 'cookie-auth'], function() use ($router) {
+    $router->get('/', ['as' => 'key-management.index', 'uses' => 'KeyManagementController@index']);
+    $router->post('/', ['as' => 'key-management.store', 'uses' => 'KeyManagementController@store']);
+    $router->get('/{id}', ['as' => 'key-management.edit', 'uses' => 'KeyManagementController@edit']);
+    $router->put('/{id}', ['as' => 'key-management.update', 'uses' => 'KeyManagementController@update']);
+    $router->delete('{id}', ['as' => 'key-management.destroy', 'uses' => 'KeyManagementController@destroy']);
+});
 
 $router->group(['prefix' => 'api'], function() use ($router) {
 
