@@ -223,7 +223,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Comma delimited callsigns, prefixes or suffixes. Each callsign queried as {callsign}%.",
+                        "description": "Comma delimited callsigns, prefixes or suffixes. Each element queried as %{element}%.",
                         "example": "LON,SCO,LTC,STC"
                     },
                     {
