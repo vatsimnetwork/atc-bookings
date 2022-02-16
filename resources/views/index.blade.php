@@ -4,9 +4,21 @@
 
     <main class="container">
         <div class="row">
+            <div class="col">
+                <div class="alert alert-info" role="alert">
+                    While controllers are able to book positions on their local facility websites, this serves as no
+                    ultimate guarantee that the position will be open at the published time. Remember that this is a
+                    voluntary network and members are providing this service in their spare time. 
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
             <div class="col-2">
                 <div class="d-grid">
-                    <button class="btn btn-info btn-block" id="toggleOrder" data-type="callsign" data-newtype="start">Order by Callsign</button>
+                    <button class="btn btn-info btn-block" id="toggleOrder" data-type="callsign" data-newtype="start">
+                        Order by Callsign
+                    </button>
                 </div>
             </div>
             <div class="col">
