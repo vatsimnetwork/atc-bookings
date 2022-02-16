@@ -8,7 +8,7 @@
                 <div class="alert alert-info" role="alert">
                     While controllers are able to book positions on their local facility websites, this serves as no
                     ultimate guarantee that the position will be open at the published time. Remember that this is a
-                    voluntary network and members are providing this service in their spare time. 
+                    voluntary network and members are providing this service in their spare time.
                 </div>
             </div>
         </div>
@@ -22,10 +22,10 @@
                 </div>
             </div>
             <div class="col">
-                <span class="badge rounded-pill" style="background-color: #3C34FFCC !important;">Booking</span>
-                <span class="badge rounded-pill" style="background-color: #ED2DC6CC !important;">Training</span>
-                <span class="badge rounded-pill" style="background-color: #EFB515CC !important;">Event</span>
-                <span class="badge rounded-pill" style="background-color: #2ECB11CC !important;">Exam</span>
+                <span class="badge rounded-pill" style="background-color: #3C34FF !important;">Booking</span>
+                <span class="badge rounded-pill" style="background-color: #ED2DC6 !important;">Training</span>
+                <span class="badge rounded-pill" style="background-color: #EFB515 !important;">Event</span>
+                <span class="badge rounded-pill" style="background-color: #2ECB11 !important;">Exam</span>
             </div>
         </div>
         <div class="row">
