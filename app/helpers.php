@@ -71,7 +71,7 @@ if (!function_exists('colour_from_progress')) {
     function colour_from_progress($now, $start, $end, $type): string
     {
         $booking = '#3C34FF';
-        $exam = '#3C34FF';
+        $exam = '#2ECB11';
         $training = '#ED2DC6';
         $event = '#EFB515';
 
