@@ -59,6 +59,7 @@ class BookingApiController extends Controller
             'callsign' => [
                 new CallsignSearchFilter
             ],
+            'cid' => 'numeric',
             'date' => 'date_format:Y-m-d',
             'division' => 'alpha|required_with:subdivision',
             'subdivision' => 'alpha',
@@ -96,6 +97,9 @@ class BookingApiController extends Controller
                     $q->orWhere('callsign', 'like', '%'.$arr_item.'%');
                 }
             });
+        }
+        if ($request->has('cid')) {
+            $query = $query->where('cid', $request->get('cid'));
         }
 
         if ($request->has('division')) {
