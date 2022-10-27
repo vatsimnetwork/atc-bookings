@@ -7,7 +7,7 @@
             <div class="col">
                 <div class="alert alert-danger" role="alert">
                     @if(request()->get('error') == 'bad-key')
-                    Incorrect key was entered!
+                    The specified key is incorrect!
                     @elseif(request()->get('error') == 'no-auth')
                     You must authenticate first!
                     @endif
