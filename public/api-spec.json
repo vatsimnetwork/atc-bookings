@@ -228,6 +228,15 @@
                     },
                     {
                         "in": "query",
+                        "name": "cid",
+                        "schema": {
+                            "type": "number"
+                        },
+                        "description": "Get bookings only associated with CID.",
+                        "example": "1240411"
+                    },
+                    {
+                        "in": "query",
                         "name": "date",
                         "schema": {
                             "type": "string",
