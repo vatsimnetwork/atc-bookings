@@ -144,7 +144,7 @@ class BookingApiController extends Controller
     public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), $this->custom_rules, $this->custom_messages);
-
+        $date = date('Y-m-d H:i:s');
         $start = $request->post('start');
         $end = $request->post('end');
         $booking_exists = null;
@@ -155,6 +155,9 @@ class BookingApiController extends Controller
                     $q->where('end', '>', $start)->where('start', '<', $end);
                 })
                 ->first();
+            if($date > $start) {
+                $validator->errors()->add('date', 'Unable to reserve a position in the past');
+            }
         } catch (Exception) {}
 
         if($booking_exists) {
@@ -203,7 +206,7 @@ class BookingApiController extends Controller
     public function update(Request $request, $id): JsonResponse
     {
         $validator = Validator::make($request->all(), $this->custom_rules_update, $this->custom_messages);
-
+        $date = date('Y-m-d H:i:s');
         $start = $request->post('start');
         $end = $request->post('end');
         $booking_exists = null;
@@ -215,6 +218,9 @@ class BookingApiController extends Controller
                     $q->where('end', '>', $start)->where('start', '<', $end);
                 })
                 ->first();
+                if($date > $start) {
+                    $validator->errors()->add('date', 'Unable to reserve a position in the past');
+                }
         } catch (Exception) {}
 
         if($booking_exists) {

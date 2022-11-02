@@ -1,5 +1,5 @@
 {
-    "openapi":"3.0.0",
+    "openapi": "3.0.0",
     "info": {
         "title": "VATSIM ATC Bookings API",
         "version": "1.0.0",
@@ -46,6 +46,13 @@
                             "type": "string"
                         }
                     },
+                    "date": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    },
+
                     "start": {
                         "type": "array",
                         "items": {
@@ -112,12 +119,7 @@
             },
             "BookingStoreRequest": {
                 "type": "object",
-                "required": [
-                    "callsign",
-                    "cid",
-                    "start",
-                    "end"
-                ],
+                "required": ["callsign", "cid", "start", "end"],
                 "properties": {
                     "callsign": {
                         "type": "string",
@@ -131,12 +133,7 @@
                         "type": "string",
                         "example": "booking",
                         "description": "booking assumed if not specified",
-                        "enum": [
-                            "booking",
-                            "event",
-                            "exam",
-                            "mentoring"
-                        ]
+                        "enum": ["booking", "event", "exam", "mentoring"]
                     },
                     "start": {
                         "type": "string",
@@ -174,12 +171,7 @@
                     "type": {
                         "type": "string",
                         "example": "booking",
-                        "enum": [
-                            "booking",
-                            "event",
-                            "exam",
-                            "training"
-                        ]
+                        "enum": ["booking", "event", "exam", "training"]
                     },
                     "start": {
                         "type": "string",
@@ -250,12 +242,7 @@
                         "name": "type",
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "booking",
-                                "event",
-                                "exam",
-                                "mentoring"
-                            ]
+                            "enum": ["booking", "event", "exam", "mentoring"]
                         },
                         "description": "Type of booking",
                         "example": "exam"
@@ -283,11 +270,7 @@
                         "name": "sort",
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "start",
-                                "end",
-                                "callsign"
-                            ]
+                            "enum": ["start", "end", "callsign"]
                         },
                         "description": "Order by selected. If not specified: start. Required with sort_dir.",
                         "example": "callsign"
@@ -297,10 +280,7 @@
                         "name": "sort_dir",
                         "schema": {
                             "type": "string",
-                            "enum": [
-                                "asc",
-                                "desc"
-                            ]
+                            "enum": ["asc", "desc"]
                         },
                         "description": "Order by direction. If not specified: asc.",
                         "example": "desc"
